@@ -1,10 +1,12 @@
 package org.oreochex.member.validators;
 
+import org.oreochex.global.configs.validators.MobileValidator;
+import org.oreochex.global.configs.validators.PasswordValidator;
 import org.oreochex.member.controllers.RequestJoin;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-public class JoinValidator implements Validator {
+public class JoinValidator implements Validator, PasswordValidator, MobileValidator {
     @Override
     public boolean supports(Class<?> clazz) { //검증하고자 하는 커맨드 객체를 제한함.
         return clazz.isAssignableFrom(RequestJoin.class);
@@ -36,6 +38,15 @@ public class JoinValidator implements Validator {
         }
 
         //3. 비밀번호 복잡성 체크 - 알파벳 대소문자 각각1개 이상, 숫자1개 이상, 특수문자 1개 이상.
+        if(!alphaCheck(password, true) || !numberCheck(password) || specialCharCheck(password)){
+            errors.rejectValue("password", "Complexity");
+        }
+
+        //4. 연락처 형식 체크
+        if(!mobileCheck(mobile)){
+            errors.rejectValue("mobile", "Mobile");
+        }
+
 
     }
 }
