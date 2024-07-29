@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <th:block th:if="${pageTitle != null}" th:text="${#string.concat(pageTitle, ' - ')}"></th:block>
+        사이트 제목
+    </title>
+
+    <!-- 모든 페이지 css   -->
+    <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}">
+    <!-- main 페이지 css   -->
+    <link rel="stylesheet" type="text/css" th:href="#{/mobile/css/style.css}">
+    <!-- 다른페이지에서 추가될 css   -->
+    <link th:if="${addCss != null}" rel="stylesheet" type="text/css"
+          th:each="cssFile: ${addCss}" th:href="@{/mobile/css/{file}.css(file=${cssFile})}">
+    <!-- addViewController 추가된 뷰구성   -->
+    <th:block layout:fragment="addCss"></th:block>
+
+
+    <!-- 모든 페이지 js   -->
+    <script th:src="@{/common/js/common.js}"></script>
+    <!-- main 페이지 js   -->
+    <script th:src="@{/mobile/js/common.js}"></script>
+    <!-- 다른페이지에서 추가될 js  -->
+    <script th:if="${addScript != null}" th:each="jsFile : ${addScript}" th:src="@{/mobile/js/{file}.js(file=${jsFile})}"></script>
+    <!-- addViewController 추가된 뷰구성   -->
+    <th:block layout:fragment="addScript"></th:block>
+</head>
+<body>
+    <!-- 공통 헤더 <header th:fragment="common"> -->
+    <header th:replace="~{mobile/outlines/_header::common}"></header>
+    <!--  치환될 각 페이지의 바디  -->
+    <main layout:fragment="content"></main>
+    <!-- 공통 푸터 <footer th:fragment="common"> -->
+    <footer th:replace="~{mobile/outlines/_footer::common}"></footer>
+    <!-- 히든프레임 -->
+    <iframe name="ifrmHidden" class="dn"></iframe>
+</body>
+</html>
