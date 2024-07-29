@@ -15,24 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private JoinValidator joinValidator;
+    private final JoinValidator joinValidator;
 
     @GetMapping("/join")
-    public String join(@ModelAttribute RequestJoin form){
+    public String join(@ModelAttribute RequestJoin form) {
         return "front/member/join";
     }
 
     @PostMapping("/join")
-    public String joinPs(@Valid RequestJoin form, Errors errors){
+    public String joinPs(@Valid RequestJoin form, Errors errors) {
+
         joinValidator.validate(form, errors);
+
         if (errors.hasErrors()) {
             return "front/member/join";
         }
-        return "redircet:/member/login";
+
+        return "redirect:/member/login";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
 
         return "front/member/login";
     }

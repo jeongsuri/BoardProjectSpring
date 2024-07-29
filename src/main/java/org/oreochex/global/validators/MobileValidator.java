@@ -1,4 +1,4 @@
-package org.oreochex.global.configs.validators;
+package org.oreochex.global.validators;
 
 public interface MobileValidator {
     default boolean mobileCheck(String mobile) {

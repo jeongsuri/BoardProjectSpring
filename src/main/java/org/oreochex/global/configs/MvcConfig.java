@@ -7,7 +7,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableJpaAuditing
+@EnableJpaAuditing //Spring Boot 애플리케이션에서 JPA 감사(Auditing) 기능을 활성화합니다. 주로 @CreatedDate와 @LastModifiedDate와 같은 필드를 자동으로 관리하기 위해 사용됩니다.
 public class MvcConfig implements WebMvcConfigurer {
 
     /**
