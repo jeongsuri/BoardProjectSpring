@@ -1,6 +1,8 @@
 package org.oreochex.member.controllers;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.oreochex.member.validators.JoinValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/member")
+@RequiredArgsConstructor
 public class MemberController {
+
+    private JoinValidator joinValidator;
 
     @GetMapping("/join")
     public String join(@ModelAttribute RequestJoin form){
@@ -19,6 +24,7 @@ public class MemberController {
 
     @PostMapping("/join")
     public String joinPs(@Valid RequestJoin form, Errors errors){
+        joinValidator.validate(form, errors);
         if (errors.hasErrors()) {
             return "front/member/join";
         }

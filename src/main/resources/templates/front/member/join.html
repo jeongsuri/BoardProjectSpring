@@ -47,7 +47,7 @@
                 <div class="terms-contents">회원가입 약관...</div>
                 <input type="checkbox" name="agree" value="true" id="agree" th:field="*{agree}">
                 <label for="agree" th:text="${회원가입_약관_동의}"></label>
-                <div class="error" th:each="error : ${#fields.errors('agree')}" th:text="${err}"></div>
+                <div class="error" th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
             </div>
             <div class="buttons">
                 <button type="button" th:text="#{다시입력}"></button>
