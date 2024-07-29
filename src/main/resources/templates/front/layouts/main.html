@@ -3,6 +3,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <title>
+        <th:block th:if="${pageTitle != null}" th:text="${#string.concat(pageTitle, ' - ')}"></th:block>
+        사이트 제목
+    </title>
+
+    <!-- 모든 페이지 css   -->
+    <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}">
+    <!-- main 페이지 css   -->
+    <link rel="stylesheet" type="text/css" th:href="#{/front/css/style.css}">
+    <!-- 다른페이지에서 추가될 css   -->
+    <link th:if="${addCss != null}" rel="stylesheet" type="text/css"
+          th:each="cssFile: ${addCss}" th:href="@{/front/css/{file}.css(file=${cssFile})}">
+    <!-- addViewController 추가된 뷰구성   -->
+    <th:block layout:fragment="addCss"></th:block>
+
+
+    <!-- 모든 페이지 js   -->
+    <script th:src="@{/common/js/common.js}"></script>
+    <!-- main 페이지 js   -->
+    <script th:src="@{/front/js/common.js}"></script>
+    <!-- 다른페이지에서 추가될 js  -->
+    <script th:if="${addScript != null}" th:each="jsFile : ${addScript}" th:src="@{/front/js/{file}.js(file=${jsFile})}"></script>
+    <!-- addViewController 추가된 뷰구성   -->
+    <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
 
