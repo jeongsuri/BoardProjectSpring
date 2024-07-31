@@ -19,23 +19,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class MemberInfoService implements UserDetailsService {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Member member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
-        //null값을 방지하기 위해 기본값을 USER로 설정.
         List<Authorities> tmp = Objects.requireNonNullElse(member.getAuthorities(),
-                List.of(Authorities.builder()
-                .member(member)
-                .authority(Authority.USER)
-                        .build()));
+                List.of(Authorities.builder().member(member).authority(Authority.USER).build()));
 
         List<SimpleGrantedAuthority> authorities = tmp.stream()
                 .map(a -> new SimpleGrantedAuthority(a.getAuthority().name()))
                 .toList();
+
 
         return MemberInfo.builder()
                 .email(member.getEmail())
