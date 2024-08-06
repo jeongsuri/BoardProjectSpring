@@ -1,9 +1,6 @@
 package org.oreochex.file.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +35,11 @@ public class FileInfo extends BaseMemberEntity {
     @Column(length = 80)
     private String contentType;
 
-    @Column(nullable = false)
     private boolean done; //그룹 작업 완료 여부
+
+    @Transient //	해당 필드 데이터베이스 매핑 무시
+    private String fileUrl; //파일 접근 URL
+
+    @Transient // 	해당 필드 데이터베이스 매핑 무시
+    private String filePath; //파일 업로드 경로
 }

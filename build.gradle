@@ -56,9 +56,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
 
 def querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
 
