@@ -24,6 +24,10 @@
     <!-- main 페이지 js   -->
     <script th:src="@{/admin/js/common.js}"></script>
     <!-- 다른페이지에서 추가될 js  -->
+
+    <script th:if="${addCommonScript != null}" th:each="jsFile : ${addCommonScript}" th:src="@{/common/js/{file}.js(file=${jsFile})}"></script>
+    <th:block layout:fragment="addCommonScript"></th:block>
+
     <script th:if="${addScript != null}" th:each="jsFile : ${addScript}" th:src="@{/admin/js/{file}.js(file=${jsFile})}"></script>
     <!-- addViewController 추가된 뷰구성   -->
     <th:block layout:fragment="addScript"></th:block>
