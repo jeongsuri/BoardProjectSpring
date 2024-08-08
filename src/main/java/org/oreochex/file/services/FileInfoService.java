@@ -100,11 +100,14 @@ public class FileInfoService {
         item.setFilePath(filePath);
     }
 
+    //브라우저 접근주소
     public String getFileUrl(FileInfo item) { //실제 파일을 다운로드할 인터넷 url 주소
-        return request.getContextPath() + properties.getUrl() + "/" +getFolder(item.getSeq()) + "/" + getFileName(item);
+        return request.getContextPath() + properties.getUrl() + getFolder(item.getSeq()) + "/" + getFileName(item);
         //request을 Utils url로 설정해야한다.
     }
 
+
+    //서버 업로드 경로
     public String getFilePath(FileInfo item) { //서버 업로드 경로
         return properties.getPath() + "/" + getFolder(item.getSeq()) + "/" + getFileName(item);
     }

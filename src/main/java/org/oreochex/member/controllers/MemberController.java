@@ -8,9 +8,14 @@ import org.oreochex.member.services.MemberSaveService;
 import org.oreochex.member.validators.JoinValidator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -30,7 +35,6 @@ public class MemberController implements ExceptionProcessor {
 
     @GetMapping("/join")
     public String join(@ModelAttribute RequestJoin form) {
-
         return "front/member/join";
     }
 
@@ -76,6 +80,29 @@ public class MemberController implements ExceptionProcessor {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void test2(){
         log.info("test2 - 관리자만 접근 가능");
+    }
+
+    private void commonProcess(String mode, Model model){
+        mode = Objects.requireNonNull(mode, "join");
+
+        List<String> addCss = new ArrayList<>();
+        List<String> addCommonScript = new ArrayList<>();
+        List<String> addScript = new ArrayList<>();
+
+        addCss.add("member/style"); //회원 공통 스타일
+        if(mode.equals("join")){
+            addCommonScript.add("fileManager");
+            addCss.add("member/join");
+            addScript.add(("member/join"));
+        }else if(mode.equals("login")){
+            addCss.add("member/login");
+        }
+
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addCommonScript", addCommonScript);
+        model.addAttribute("addScript",addScript);
+
+
     }
 
 
